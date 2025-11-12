@@ -1,10 +1,10 @@
 import { View, Text } from "@tarojs/components";
-import "./index.scss";
+import PageContainerComponent from "@/components/page-container"
 
 export default function Index() {
   return (
-    <View className="index">
+    <PageContainerComponent>
       <Text>Hello world!</Text>
-    </View>
+    </PageContainerComponent>
   );
 }

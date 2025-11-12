@@ -1,0 +1,59 @@
+* {
+  font-size: 16px;
+}
+/* 常用样式 */
+:root {
+  /* Sizing */
+  --auto: auto;
+  --min-content: min-content;
+  --max-content: max-content;
+  --fit-content: fit-content;
+  /* Screen */
+  --width-screen: 100vw;
+  --height-screen: 100vh;
+  /* Display */
+  --display-flex: flex;
+  --display-grid: grid;
+  --display-block: block;
+  /* Flexbox */
+  --flex-row: row;
+  --flex-col: column;
+  --flex-start: flex-start;
+  --flex-end: flex-end;
+  --flex-center: center;
+  --flex-between: space-between;
+  /* Spacing scale */
+  --spacing: 1%;
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-5: 1.25rem; /* 20px */
+  --spacing-6: 1.5rem; /* 24px */
+  --spacing-7: 1.75rem; /* 28px */
+  --spacing-8: 2rem; /* 32px */
+  --spacing-9: 2.25rem; /* 36px */
+  --spacing-10: 2.5rem; /* 40px */
+  /* Container scale */
+  --container-3xs: 16rem; /* 16rem (256px) */
+  --container-2xs: 18rem; /* 18rem (288px) */
+  --container-xs: 20rem; /* 20rem (320px) */
+  --container-sm: 24rem; /* 24rem (384px) */
+  --container-md: 28rem; /* 28rem (448px) */
+  --container-lg: 32rem; /* 32rem (512px) */
+  --container-xl: 36rem; /* 36rem (576px) */
+  --container-2xl: 42rem; /* 42rem (672px) */
+  --container-3xl: 48rem; /* 48rem (768px) */
+  --container-4xl: 56rem; /* 56rem (896px) */
+  --container-5xl: 64rem; /* 64rem (1024px) */
+  --container-6xl: 72rem; /* 72rem (1152px) */
+  --container-7xl: 80rem; /* 80rem (1280px) */
+  /* Box sizing */
+  --box-sizing-border-box: border-box;
+  /* Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-700: #374151;
+}
