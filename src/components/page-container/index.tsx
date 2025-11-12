@@ -27,13 +27,13 @@ function PageContainerComponent(props: IProps) {
     left: leftMenuButton, // 胶囊按钮左边界坐标
     right: rightMenuButton, // 胶囊按钮右边界坐标
   } = getMenuButtonBoundingClientRect();
-  // 导航栏高度 = (胶囊按钮上边界坐标 - 状态栏高度) * 2 + 胶囊按钮高度
+  // 导航栏高度 = 胶囊按钮上边界坐标 * 2 + 胶囊按钮高度 - 状态栏高度
   const navBarHeight =
-    topMenuButton * 2 + heightMenuButton - realStatusBarHeight + 4;
+    topMenuButton * 2 + heightMenuButton - realStatusBarHeight;
 
   return (
     <FlexComponent
-      className="w-screen h-screen overflow-hidden"
+      className="w-screen h-screen"
       vertical
       align="center"
     >

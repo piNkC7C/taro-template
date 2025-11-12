@@ -58,6 +58,12 @@ $percents: 100;
   .h-#{$i} {
     height: calc(var(--spacing) * #{$i});
   }
+  .max-w-#{$i} {
+    max-width: calc(var(--spacing) * #{$i});
+  }
+  .max-h-#{$i} {
+    max-height: calc(var(--spacing) * #{$i});
+  }
 }
 // 分数
 $fractions: (
@@ -83,6 +89,12 @@ $fractions: (
   // 高度
   .h-#{$name} {
     height: calc(#{$value} * 100%);
+  }
+  .max-w-#{$name} {
+    max-width: calc(#{$value} * 100%);
+  }
+  .max-h-#{$name} {
+    max-height: calc(#{$value} * 100%);
   }
 }
 // size容器
@@ -118,6 +130,12 @@ $sizes: map.merge($containers, $fixed);
   // 高度
   .h-#{$name} {
     height: $value;
+  }
+  .max-w-#{$name} {
+    max-width: $value;
+  }
+  .max-h-#{$name} {
+    max-height: $value;
   }
 }
 .w-screen {
