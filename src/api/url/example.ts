@@ -1,2 +1,2 @@
 // 示例接口
-export const exampleURL = '/example'
+export const getExampleListURL = '/example'

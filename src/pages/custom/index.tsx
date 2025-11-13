@@ -1,4 +1,4 @@
-import { View, Text } from "@tarojs/components";
+import { Text } from "@tarojs/components";
 import PageContainerComponent from "@/components/page-container";
 import FlexComponent from "@/components/flex";
 
@@ -15,7 +15,14 @@ export default function Index() {
         </FlexComponent>
       }
     >
-      <Text>Hello world!</Text>
+      <FlexComponent
+        className="w-full h-full"
+        align="center"
+        justify="center"
+        vertical
+      >
+        <Text>Hello world!</Text>
+      </FlexComponent>
     </PageContainerComponent>
   );
 }

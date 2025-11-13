@@ -25,6 +25,9 @@ export default defineConfig<"vite">(async (merge, { mode }) => {
     defineConstants: {
       MY_CONST: JSON.stringify({
         isProd: mode === "production",
+        baseURL: env.TARO_APP_BASE_URL,
+        tenantID: env.TARO_APP_TENANT_ID || '',
+        seniorToken: env.TARO_APP_SENIOR_TOKEN || '',
       }),
     },
     alias: {

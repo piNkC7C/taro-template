@@ -3,6 +3,7 @@ import PageContainerComponent from "@/components/page-container";
 import { useAppDispatch, useAppSelector } from "@/hook/useAppStore";
 import FlexComponent from "@/components/flex";
 import { setExampleListAction } from "@/redux/modules/example";
+import { getLoginInfoAPI } from "@/api/login";
 
 export default function Index() {
   const {
@@ -28,6 +29,13 @@ export default function Index() {
             }
           >
             测试redux
+          </Button>
+          <Button
+            onClick={() =>
+              getLoginInfoAPI()
+            }
+          >
+            获取用户信息
           </Button>
           <Text>{exampleList.join(",")}</Text>
           <View className="h-3xl"></View>
