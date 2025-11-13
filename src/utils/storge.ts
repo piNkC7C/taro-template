@@ -31,3 +31,13 @@ export const setRefreshToken = (refreshToken: string) => {
 export const removeRefreshToken = () => {
     Taro.removeStorageSync(LOCAL_STORAGE_NAME.REFRESH_TOKEN)
 }
+
+// 获取openId
+export const getOpenId = () => {
+    return Taro.getStorageSync(LOCAL_STORAGE_NAME.OPEN_ID)
+}
+
+// 设置openId
+export const setOpenId = (openId: string) => {
+    Taro.setStorageSync(LOCAL_STORAGE_NAME.OPEN_ID, openId)
+}

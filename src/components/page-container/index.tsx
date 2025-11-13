@@ -3,16 +3,18 @@ import {
   getMenuButtonBoundingClientRect,
 } from "@tarojs/taro";
 import { memo, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import equal from "fast-deep-equal";
 import FlexComponent from "@/components/flex";
 
 interface IProps {
-  children: ReactNode;
   navigation?: ReactNode;
 }
 
-function PageContainerComponent(props: IProps) {
-  const { navigation, children } = props;
+function PageContainerComponent({
+  children,
+  navigation,
+}: PropsWithChildren<IProps>) {
   const {
     statusBarHeight, // 状态栏高度
     windowHeight, // 屏幕高度
@@ -32,11 +34,7 @@ function PageContainerComponent(props: IProps) {
     topMenuButton * 2 + heightMenuButton - realStatusBarHeight;
 
   return (
-    <FlexComponent
-      className="w-screen h-screen"
-      vertical
-      align="center"
-    >
+    <FlexComponent className="w-screen h-screen" vertical align="center">
       {navigation && (
         <FlexComponent
           className="w-full border-box"

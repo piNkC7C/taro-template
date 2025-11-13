@@ -1,5 +1,6 @@
 import { View } from "@tarojs/components";
-import { CSSProperties, memo, ReactNode } from "react";
+import { memo } from "react";
+import type { PropsWithChildren, CSSProperties, ReactNode } from "react";
 import equal from "fast-deep-equal";
 
 type Justify =
@@ -33,9 +34,8 @@ interface IProps {
   flex?: string | number; // 容器自身的 flex 值（当父级是 flex 时生效）
 }
 
-function FlexComponent(props: IProps) {
+function FlexComponent({ children, ...props }: PropsWithChildren<IProps>) {
   const {
-    children,
     className,
     style,
     vertical = false,
