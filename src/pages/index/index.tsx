@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/hook/useAppStore";
 import FlexComponent from "@/components/flex";
 import { setExampleListAction } from "@/redux/modules/example";
 import { getLoginInfoAPI } from "@/api/login";
+import { AtButton } from "taro-ui";
 
 export default function Index() {
   const {
@@ -14,9 +15,11 @@ export default function Index() {
   return (
     <PageContainerComponent>
       <ScrollView className="w-full h-full" scrollY>
-        <FlexComponent className="w-full h-max" vertical>
+        <FlexComponent className="w-full h-max" vertical gap={5}>
           <Text>Hello world!</Text>
-          <Button
+          <AtButton
+            type="primary"
+            size="small"
             onClick={() =>
               dispatch(
                 setExampleListAction([
@@ -29,14 +32,15 @@ export default function Index() {
             }
           >
             测试redux
-          </Button>
-          <Button
-            onClick={() =>
-              getLoginInfoAPI()
-            }
+          </AtButton>
+          <AtButton
+            type="secondary"
+            size="small"
+            circle
+            onClick={() => getLoginInfoAPI()}
           >
             获取用户信息
-          </Button>
+          </AtButton>
           <Text>{exampleList.join(",")}</Text>
           <View className="h-3xl"></View>
           <Text>{exampleList.join(",")}</Text>
