@@ -1,7 +1,8 @@
 import { PropsWithChildren } from "react";
 
+import "./utils/dayjs";
 import "./app.scss";
-import 'taro-ui/dist/style/index.scss'
+import "taro-ui/dist/style/index.scss";
 import { Provider } from "react-redux";
 import store from "./redux";
 
