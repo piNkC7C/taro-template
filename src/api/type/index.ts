@@ -1,16 +1,16 @@
-export interface IResponseData<T> {
-  code: number
-  data: T
-  msg?: string
+// 接口响应数据类型
+export interface IResponseData<T = any> {
+  code: number;
+  data: T;
+  msg?: string;
 }
 
-export interface IResponse<T> {
-  success: boolean
-  data: T
-  errMsg?: string
+// 拦截器响应数据类型
+export interface IResponse<T = any> {
+  success: boolean;
+  data: T;
+  errMsg?: string;
 }
 
-export type IRequest<T>  = T
-
-export * from './common'
-export * from './login'
+export * from "./common";
+export * from "./login";

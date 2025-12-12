@@ -57,7 +57,7 @@ export const refreshTokenAPI = async (
 
 // 获取用户信息接口
 export const getLoginInfoAPI = async (): Promise<IResponse<ILoginInfo>> => {
-  const response = await appRequest.get<ILoginInfo>({
+  const response = await appRequest.get({
     url: getLoginInfoURL,
   });
 
@@ -68,7 +68,7 @@ export const getLoginInfoAPI = async (): Promise<IResponse<ILoginInfo>> => {
 export const sendMobileCodeAPI = async (
   data: ISendMobileCodeRequest
 ): Promise<IResponse<boolean>> => {
-  const response = await seniorRequest.post<boolean>({
+  const response = await seniorRequest.post({
     url: sendMobileCodeURL,
     data,
   });
@@ -80,7 +80,7 @@ export const sendMobileCodeAPI = async (
 export const verifyMobileCodeAPI = async (
   data: IVerifyMobileCodeRequest
 ): Promise<IResponse<boolean>> => {
-  const response = await seniorRequest.post<boolean>({
+  const response = await seniorRequest.post({
     url: verifyMobileCodeURL,
     data,
   });
@@ -92,7 +92,7 @@ export const verifyMobileCodeAPI = async (
 export const phoneLoginAPI = async (
   data: IPhoneLoginRequest
 ): Promise<IResponse<ILoginResponse>> => {
-  const response = await seniorRequest.post<ILoginResponse>({
+  const response = await seniorRequest.post({
     url: phoneLoginURL,
     data,
   });

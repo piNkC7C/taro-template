@@ -1,27 +1,29 @@
 import Taro from "@tarojs/taro";
-import type { TaroRequestConfig, TaroInterceptors, TaroResponse } from "./type";
+import type { ITaroRequest, ITaroInterceptors, ITaroResponse } from "./type";
 import { IResponse, IResponseData } from "@/api/type";
 
-// 统一的请求类：与 PC 端 axios 封装保持接口一致
-class TTRequest {
-  private baseURL: string;
-  private timeout: number;
-  private instanceInterceptors?: TaroInterceptors;
-  private shouldEncode: 0 | 1;
+interface IConfig {
+  baseURL: string; // 基础 URL
+  timeout?: number; // 请求超时时间（默认 30s）
+  interceptors?: ITaroInterceptors; // 拦截器
+  shouldEncode?: 0 | 1; // 是否对参数进行编码（0: 不编码, 1: 编码）（默认 1: 编码）
+}
 
-  constructor(config: {
-    baseURL: string;
-    timeout?: number;
-    interceptors?: TaroInterceptors;
-    shouldEncode?: 0 | 1;
-  }) {
+// 统一的请求类：与 PC 端 axios 封装保持接口一致
+class UniteTaroRequest {
+  private baseURL: string; // 基础 URL
+  private timeout: number; // 请求超时时间（默认 30s）
+  private instanceInterceptors?: ITaroInterceptors; // 实例级拦截器
+  private shouldEncode: 0 | 1; // 是否对参数进行编码（0: 不编码, 1: 编码）（默认 1: 编码）
+
+  constructor(config: IConfig) {
     this.baseURL = config.baseURL;
     this.timeout = config.timeout || 30000;
     this.instanceInterceptors = config.interceptors;
     this.shouldEncode = config.shouldEncode || 1;
   }
 
-  private buildURL(url: string, params?: TaroRequestConfig["params"]) {
+  private buildURL(url: string, params?: ITaroRequest["params"]) {
     const full = url.startsWith("http") ? url : `${this.baseURL}${url}`;
     if (!params || Object.keys(params).length === 0) return full;
     // 不编码时，直接拼接查询字符串
@@ -49,9 +51,7 @@ class TTRequest {
     return urlWithParams;
   }
 
-  async request<RES>(
-    config: TaroRequestConfig<RES>
-  ): Promise<IResponse<RES>> {
+  async request(config: ITaroRequest) {
     // 单次请求拦截器（优先）
     if (config.interceptors?.requestSuccessFn) {
       config = config.interceptors.requestSuccessFn(config);
@@ -64,7 +64,7 @@ class TTRequest {
     const url = this.buildURL(config.url, config.params);
 
     try {
-      const apiResponse = await Taro.request<IResponseData<RES>>({
+      const apiResponse = await Taro.request<IResponseData>({
         url,
         // 避免错误的命名空间引用，直接使用字符串联合
         method: config.method,
@@ -72,8 +72,9 @@ class TTRequest {
         data: config.data,
         timeout: config.timeout || this.timeout,
       });
+      // 状态码 200 处理
       if (apiResponse.statusCode === 200) {
-        const res: TaroResponse<RES> = {
+        const res: ITaroResponse = {
           ...apiResponse,
           config: config,
         };
@@ -81,7 +82,7 @@ class TTRequest {
         console.log("Taro.request success", res);
 
         // 实例响应成功拦截器
-        let handled: IResponse<RES> | null = null;
+        let handled: IResponse | null = null;
         if (this.instanceInterceptors?.responseSuccessFn) {
           handled = this.instanceInterceptors.responseSuccessFn(res);
         }
@@ -90,11 +91,7 @@ class TTRequest {
           handled = config.interceptors.responseSuccessFn(res);
         }
         if (!handled) {
-          return {
-            success: res.statusCode === 200 && res.data.code === 0,
-            data: res.data.data,
-            errMsg: res.data.msg,
-          };
+          throw apiResponse;
         }
         return handled;
       } else {
@@ -113,30 +110,30 @@ class TTRequest {
         return ret;
       }
       // 原始错误
-      let handled: IResponse<RES> = {
+      let handled: IResponse = {
         success: false,
-        data: null as RES,
+        data: null,
         errMsg: err?.errMsg || "接口响应失败",
       };
       return handled;
     }
   }
 
-  get<RES>(config: TaroRequestConfig<RES>) {
-    return this.request<RES>({ ...config, method: "GET" });
+  get(config: ITaroRequest) {
+    return this.request({ ...config, method: "GET" });
   }
-  post<RES>(config: TaroRequestConfig<RES>) {
-    return this.request<RES>({ ...config, method: "POST" });
+  post(config: ITaroRequest) {
+    return this.request({ ...config, method: "POST" });
   }
-  put<RES>(config: TaroRequestConfig<RES>) {
-    return this.request<RES>({ ...config, method: "PUT" });
+  put(config: ITaroRequest) {
+    return this.request({ ...config, method: "PUT" });
   }
-  delete<RES>(config: TaroRequestConfig<RES>) {
-    return this.request<RES>({ ...config, method: "DELETE" });
+  delete(config: ITaroRequest) {
+    return this.request({ ...config, method: "DELETE" });
   }
-  patch<RES>(config: TaroRequestConfig<RES>) {
-    return this.request<RES>({ ...config, method: "PATCH" });
+  patch(config: ITaroRequest) {
+    return this.request({ ...config, method: "PATCH" });
   }
 }
 
-export default TTRequest;
+export default UniteTaroRequest;

@@ -5,7 +5,7 @@ import { IResponse } from '../type'
 
 
 export const getExampleListAPI = async (params: IGetExampleListRequest): Promise<IResponse<boolean>> => {
-  const response = await appRequest.get<boolean>({
+  const response = await appRequest.get({
     url: getExampleListURL,
     params
   })

@@ -1,8 +1,7 @@
 import Taro from "@tarojs/taro";
 import { BASE_URL, APP_URL, TIME_OUT, TENANT_ID, SENIOR_TOKEN } from "./config";
-import TTRequest from "./request";
-import type { TaroRequestConfig } from "./request/type";
-import type { IResponse } from "@/api/type";
+import UniteTaroRequest from "./request";
+import type { ITaroRequest } from "./request/type";
 import { refreshToken } from "@/utils/auth";
 import {
   getAccessToken,
@@ -14,17 +13,17 @@ import { ROUTE_PATH } from "@/constants";
 
 // 刷新中状态与等待队列
 let isRefreshing = false;
-interface PendingRequest<T = any> {
-  config: TaroRequestConfig<T>;
+interface PendingRequest {
+  config: ITaroRequest;
   resolve: (value: any) => void;
   reject: (reason?: any) => void;
-  requestInstance: TTRequest;
+  requestInstance: UniteTaroRequest;
 }
 const waitQueue: PendingRequest[] = [];
 
 const handleTokenRefresh = async (
-  originalRequest: TaroRequestConfig,
-  requestInstance: TTRequest
+  originalRequest: ITaroRequest,
+  requestInstance: UniteTaroRequest
 ) => {
   return new Promise((resolve, reject) => {
     // 进入等待队列
@@ -77,7 +76,7 @@ const createRequest = (
   headerAuth?: string,
   shouldEncode?: 0 | 1
 ) => {
-  const requestInstance = new TTRequest({
+  const requestInstance = new UniteTaroRequest({
     baseURL,
     timeout: TIME_OUT,
     shouldEncode,
@@ -98,28 +97,27 @@ const createRequest = (
       // 响应拦截：统一结构化返回，并处理 401
       responseSuccessFn(response) {
         const res = response.data;
-        switch (res?.code) {
+        switch (res.code) {
           case 0:
             return {
               success: true,
               data: res.data,
-              errMsg: undefined,
-            } as IResponse<any>;
+            };
           case 401:
             // 进入刷新逻辑
             return handleTokenRefresh(response.config, requestInstance) as any;
           default:
-            Taro.showToast({ title: res?.msg || "接口响应失败", icon: "none" });
+            Taro.showToast({ title: res.msg || "接口响应失败", icon: "none" });
             return {
               success: false,
-              data: res?.data,
-              errMsg: res?.msg || "响应失败",
-            } as IResponse<any>;
+              data: res.data,
+              errMsg: res.msg || "响应失败",
+            };
         }
       },
       responseFailureFn(error) {
         console.log("接口响应失败", error);
-        let errMsg = error?.errMsg || "接口响应失败";
+        let errMsg = error.errMsg || "接口响应失败";
         Taro.showToast({ title: errMsg, icon: "none" });
         return {
           success: false,
